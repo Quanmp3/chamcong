@@ -2,6 +2,23 @@ const path = require("path");
 const http = require("http");
 const fs = require("fs");
 const express = require("express");
+const mysql = require("mysql2");
+
+const connection = mysql.createConnection({
+  host: process.env.DB_HOST,
+  port: Number(process.env.DB_PORT),
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME
+});
+
+connection.connect(err => {
+  if (err) {
+    console.error("❌ MySQL lỗi:", err);
+  } else {
+    console.log("✅ Connected to Railway MySQL");
+  }
+});
 const jwt = require("jsonwebtoken");
 const { OAuth2Client } = require("google-auth-library");
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
